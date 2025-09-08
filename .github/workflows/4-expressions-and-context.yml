@@ -10,8 +10,6 @@ jobs:
       NODE_VERSION: '18'
       BUILD_ENV: 'development'
       APP_NAME: 'TestApp'
-      TEST_API_KEY: ${{ secrets.TEST_API_KEY }}
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
     # Your Step 1: GitHub Context Information
       - name: GitHub Context Information
@@ -43,10 +41,22 @@ jobs:
           echo "Home directory: ${{ env.HOME }}"
     # Your Step 4: Secrets Context Test
       - name: Secrets Context Test
+        env:
+          TEST_API_KEY: ${{ secrets.TEST_API_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           echo "=== Secrets Availability Check ==="
           echo "Has TEST_API_KEY secret: ${{ secrets.TEST_API_KEY != '' }}"
           echo "Has DATABASE_URL secret: ${{ secrets.DATABASE_URL != '' }}"
+          echo "TEST_API_KEY env: ${{ env.TEST_API_KEY }}"
+          echo "DATABASE_URL env: ${{ env.DATABASE_URL }}"
           echo "API key configured: ${{ secrets.TEST_API_KEY != '' && 'YES' || 'NO' }}"
           echo "Database URL starts with 'postgresql': ${{ startsWith(secrets.DATABASE_URL, 'postgresql') }}"
 
+#  logic-operations:
+ #   needs: context-explorer
+  #  runs-on: ubuntu-latest
+   # steps:
+    # Your Step 1: Branch-based Conditional Steps (3 separate conditional steps)
+    # Your Step 2: OS Conditional Steps (3 separate conditional steps)
+    # Your Step 3: String Manipulation Functions
